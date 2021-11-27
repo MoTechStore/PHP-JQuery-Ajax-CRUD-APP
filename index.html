@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TechSky</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style type="text/css">
+	.modal {
+ display: none; /* Hidden by default */
+ position: fixed; /* Stay in place */
+ z-index: 1; /* Sit on top */
+ left: 0;
+ top: 0;
+ width: 100%; /* Full width */
+ height: 100%; /* Full height */
+ overflow: auto; /* Enable scroll if needed */
+ background-color: rgb(0,0,0); /* Fallback color */
+ background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+ background-color: #fefefe;
+ margin: 15% auto; /* 15% from the top and centered */
+ padding: 20px;
+ border: 1px solid #888;
+ width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+ color: #aaa;
+ float: right;
+ font-size: 28px;
+ font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+ color: black;
+ text-decoration: none;
+ cursor: pointer;
+}
+</style>
+
+
+</head>
+<body>
+	<div class="container-fluid">
+		<h1 class="text-center alert alert-danger">PHP Ajax CRUD Application</h1>
+		<div class="row">
+			
+			<div class="col-sm-4">
+		   <h4 class="text-center alert alert-info">Add/Update Student</h4>
+
+		   <form method="POST">
+			   <input type="hidden" id="studi" name="stuid" />
+			<div class="form-group">
+				   <label >First Name</label>
+				   <input type="text" class="form-control" required="" id="fname">
+			</div>
+
+			<div class="form-group">
+				<label >Last Name</label>
+				<input type="text" class="form-control" required="" id="lname">
+		 </div>
+		 <div class="form-group">
+			<label >Course Name</label>
+			<input type="text" class="form-control" required="" id="course">
+	 </div>
+	 <button type="button" class="btn btn-primary" id="btnsave">Save</button>
+
+		   </form>
+
+
+				
+			</div>
+
+			<div class="col-sm-7">
+	<h4 class="text-center alert alert-info">Student List In Motech University</h4>
+          <div>
+			  <table class="table table-hover">
+				  <thead>
+					  <tr>
+						  <th scope="col">First Name</th>
+						  <th scope="col">Last Name</th>
+						  <th scope="col">Course</th>
+						  <th scope="col">Action</th>
+					  </tr>
+				  </thead>
+				  <tbody id="tbody" class="studentList">
+
+				  </tbody>
+			  </table>
+		  </div>
+
+
+		  <!--- First name modal -->
+   <div class="modal" tabindex="-1" role="dialog" id="fnameModal">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title text-danger">Information Required</h5>
+  
+		</div>
+		<div class="modal-body">
+		  <p class="text-primary">Please Enter First Name</p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="fmodalbutton">Close</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+  <!--- End of First name modal -->
+
+
+			  		  <!--- Last name modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="lnameModal">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title text-danger">Information Required</h5>
+			  
+					</div>
+					<div class="modal-body">
+					  <p class="text-primary">Please Enter Last Name</p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="lmodalbutton">Close</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <!--- End of Last name modal -->  
+
+			<!--- Course name modal -->
+			<div class="modal" tabindex="-1" role="dialog" id="cnameModal">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title text-danger">Information Required</h5>
+			  
+					</div>
+					<div class="modal-body">
+					  <p class="text-primary">Please Enter Course Name</p>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cmodalbutton">Close</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <!--- End of Course name modal -->
+
+
+			  <!--- Edit modal -->
+<div class="edit-form">
+	<div class="modal" tabindex="-1" role="dialog" id="editModal">
+   <div class="modal-dialog" role="document">
+	 <div class="modal-content">
+	   <div class="modal-header">
+		 <h5 class="modal-title text-primary">Edit Student Information</h5>
+	   </div>
+	   <div class="modal-body">
+		   <form id="contactForm" name="contact" role="form">
+		   <input type="hidden" name="" value="" class="sid" id="sid">
+		 <div class="modal-body">        
+		   <div class="form-group">
+			 <label for="name">First Name</label>
+			 <input type="text" name="" class="form-control" id="fname">
+		   </div>
+		   <div class="form-group">
+			 <label for="name">Last Name</label>
+			 <input type="text" name="" class="form-control" id="lname">
+		   </div>
+		   <div class="form-group">
+			 <label for="name">Course</label>
+			 <input type="text" name="" class="form-control" id="course">
+		   </div>         
+		 </div>
+		 <div class="modal-footer">          
+		   <button type="button" class="btn btn-default" data-dismiss="modal" id="emodalbutton">Close</button>
+		   <input type="button" value="Save" class="btn btn-success save-student" id="submit">
+		 </div>
+	   </form>
+	   </div>
+	 </div>
+   </div>
+ </div>
+ </div>
+ <!--- End of edit modal -->
+ 
+				
+			</div>
+			<div class="col-sm-2"></div>
+
+		</div>
+	</div>
+
+<script src="js/students.js"></script>	
+
+
+</body>
+</html>
